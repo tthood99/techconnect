@@ -5,21 +5,21 @@ const Services: React.FC = () => {
   const services = [
     {
       title: "Smartphone Simplification",
-      desc: "Making your iPhone or Android easy to see and use. We remove the clutter and focus on calling family, taking photos, and staying safe.",
+      desc: "Making your iPhone or Android easy to see and use. We remove the clutter and focus on what matters to you—calling family, taking photos, and staying safe.",
       icon: "fa-mobile-alt",
-      img: "https://picsum.photos/seed/phone/400/300"
+      img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=400"
     },
     {
       title: "Smart Home Setup",
       desc: "Voice-controlled lights, smart doorbells, and thermostats that help you manage your home without straining your hands or back.",
       icon: "fa-home",
-      img: "https://picsum.photos/seed/home/400/300"
+      img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=400"
     },
     {
       title: "Digital Safety Training",
       desc: "Learn how to spot scams, manage passwords securely, and browse the web without worry. We build your confidence and your security.",
       icon: "fa-shield-alt",
-      img: "https://picsum.photos/seed/safe/400/300"
+      img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=400"
     }
   ];
 
@@ -28,7 +28,7 @@ const Services: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">How We Can Help</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Tailored technology solutions that prioritize your comfort and ease of use.</p>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Tailored technology education that prioritizes your comfort and ease of use.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-10">
           {services.map((s) => (

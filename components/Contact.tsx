@@ -9,7 +9,7 @@ const Contact: React.FC = () => {
           <div className="p-10 md:p-16 bg-blue-900 text-white">
             <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
             <p className="text-xl mb-10 opacity-90">
-              Ready to feel confident with your technology? Schedule a free 15-minute phone consultation with one of our therapists.
+              Ready to feel confident with your technology? Schedule a free 15-minute phone consultation with us.
             </p>
             <div className="space-y-6">
               <div className="flex items-center text-xl">
@@ -18,7 +18,7 @@ const Contact: React.FC = () => {
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-envelope w-10 text-orange-400"></i>
-                <span>hello@techconnect-ot.com</span>
+                <span>hello@techme.com</span>
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-map-marker-alt w-10 text-orange-400"></i>

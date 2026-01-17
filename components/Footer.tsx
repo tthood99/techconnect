@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-center md:text-left">
           <span className="text-3xl font-bold text-white tracking-tight">
-            TechConnect <span className="text-orange-500">OT</span>
+            Tech<span className="text-orange-500">ME</span>
           </span>
           <p className="mt-2 text-lg">Mastering Technology, Enhancing Life.</p>
         </div>
@@ -20,8 +20,8 @@ const Footer: React.FC = () => {
 
         <div className="text-center md:text-right">
           <p className="text-sm font-bold uppercase tracking-widest text-slate-500">Accessibility First</p>
-          <p className="text-sm">Licensed Occupational Therapy Services</p>
-          <p className="text-sm mt-4">&copy; {new Date().getFullYear()} TechConnect OT. All rights reserved.</p>
+          <p className="text-sm">Dedicated Technology Education</p>
+          <p className="text-sm mt-4">&copy; {new Date().getFullYear()} TechME. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
               Empowering Your Independence Through <span className="text-blue-700 underline decoration-orange-500">Technology.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed">
-              We are Licensed Occupational Therapists partnering with tech specialists to help you master your devices with confidence and safety.
+              We are tech enthusiasts dedicated to helping you master your devices with patience, confidence, and ease.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
               </a>
               <a
                 href="#contact"
-                className="inline-block text-center border-4 border-blue-700 text-blue-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition-colors"
+                className="inline-block text-center border-4 border-blue-700 text-blue-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition-colors shadow-sm"
               >
                 Free Consultation
               </a>
@@ -30,8 +30,8 @@ const Hero: React.FC = () => {
           </div>
           <div className="hidden md:block">
             <img
-              src="https://picsum.photos/seed/techot/800/600"
-              alt="An older adult smiling while successfully using a tablet with a therapist"
+              src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=800"
+              alt="Two people learning technology together"
               className="rounded-3xl shadow-2xl border-8 border-white"
             />
           </div>

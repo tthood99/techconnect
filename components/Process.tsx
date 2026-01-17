@@ -5,22 +5,22 @@ const Process: React.FC = () => {
   const steps = [
     {
       number: "1",
-      title: "Clinical Assessment",
-      desc: "An Occupational Therapist meets with you to understand your goals, physical abilities, and any challenges you face.",
-      icon: "fa-clipboard-check",
+      title: "Initial Conversation",
+      desc: "We meet with you to understand your goals, what you'd like to achieve, and any challenges you face.",
+      icon: "fa-comments",
       color: "bg-blue-700"
     },
     {
       number: "2",
       title: "Custom Setup",
-      desc: "Our tech specialists configure your devices—simplifying menus, enlarging fonts, and installing safety tools.",
+      desc: "We configure your devices specifically for you—simplifying menus, enlarging fonts, and installing security tools.",
       icon: "fa-tools",
       color: "bg-orange-600"
     },
     {
       number: "3",
       title: "Guided Training",
-      desc: "We teach you how to use your new setup at your own pace, focusing on the tasks that are important to your daily life.",
+      desc: "We teach you how to use your setup at your own pace, focusing on the tasks that make your daily life better.",
       icon: "fa-graduation-cap",
       color: "bg-green-600"
     }
