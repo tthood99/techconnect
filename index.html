@@ -5,41 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechME | Master Your Technology</title>
-    <!-- Dependencies -->
+    
+    <!-- External Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!-- React and Babel -->
+    
+    <!-- React & Babel (UMD Versions for stability) -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
         html, body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            font-family: 'Open+Sans', sans-serif;
+            margin: 0; padding: 0; overflow-x: hidden;
+            font-family: 'Open+Sans', sans-serif; scroll-behavior: smooth;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #0056b3; border-radius: 10px; }
-        
-        /* Ensure sections account for the fixed navbar */
-        .scroll-section {
-            scroll-margin-top: 80px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
+        .scroll-mt-20 { scroll-margin-top: 80px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 <script type="importmap">
 {
@@ -51,21 +36,16 @@
 }
 </script>
 </head>
-<body class="bg-slate-50 text-gray-900 leading-relaxed">
+<body class="bg-slate-50 text-gray-900">
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Initialize EmailJS with the Public Key from your screenshot
-        emailjs.init("AlzaSyB-DNj2bdMK__poP6dl");
-
-        const scrollToSection = (id) => {
-            const element = document.getElementById(id.replace('#', ''));
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        };
+        // Initialize EmailJS immediately
+        if (window.emailjs) {
+            emailjs.init("aTdQnBSv8H5viqrL4");
+        }
 
         const Navbar = () => {
             const [isOpen, setIsOpen] = useState(false);
@@ -76,62 +56,27 @@
                 { label: 'Who We Help', href: '#who' },
                 { label: 'Contact', href: '#contact' },
             ];
-
-            const handleClick = (e, href) => {
-                e.preventDefault();
-                scrollToSection(href);
-                setIsOpen(false);
-            };
-
             return (
                 <nav className="sticky top-0 z-50 bg-white border-b-4 border-blue-700 shadow-md">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between h-20">
-                            <div className="flex items-center">
-                                <span className="text-2xl md:text-3xl font-bold text-blue-800 tracking-tight cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-                                    Tech<span className="text-orange-600">ME</span>
-                                </span>
-                            </div>
-                            <div className="hidden md:flex items-center space-x-8">
-                                {navItems.map((item) => (
-                                    <a 
-                                        key={item.label} 
-                                        href={item.href} 
-                                        onClick={(e) => handleClick(e, item.href)}
-                                        className="text-lg font-bold text-gray-800 hover:text-blue-700 hover:underline decoration-4 transition-all"
-                                    >
-                                        {item.label}
-                                    </a>
-                                ))}
-                                <a 
-                                    href="#contact" 
-                                    onClick={(e) => handleClick(e, '#contact')}
-                                    className="bg-blue-700 text-white px-6 py-2 rounded-full text-lg font-bold hover:bg-blue-800 shadow-lg transition-transform hover:scale-105"
-                                >
-                                    Get Started
-                                </a>
-                            </div>
-                            <div className="md:hidden flex items-center">
-                                <button onClick={() => setIsOpen(!isOpen)} className="text-gray-800 p-2 focus:outline-none">
-                                    <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-3xl`}></i>
-                                </button>
-                            </div>
+                    <div className="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+                        <span className="text-3xl font-bold text-blue-800 cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
+                            Tech<span className="text-orange-600">ME</span>
+                        </span>
+                        <div className="hidden md:flex items-center space-x-8">
+                            {navItems.map(item => (
+                                <a key={item.label} href={item.href} className="text-lg font-bold hover:text-blue-700 hover:underline decoration-4 transition-all">{item.label}</a>
+                            ))}
+                            <a href="#contact" className="bg-blue-700 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-800 shadow-lg transition-colors">Get Started</a>
                         </div>
+                        <button className="md:hidden text-2xl p-2" onClick={() => setIsOpen(!isOpen)}>
+                            <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                        </button>
                     </div>
                     {isOpen && (
-                        <div className="md:hidden bg-white border-b-2 border-blue-700">
-                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                                {navItems.map((item) => (
-                                    <a 
-                                        key={item.label} 
-                                        href={item.href} 
-                                        className="block px-3 py-4 text-xl font-bold text-gray-800 border-b border-gray-100" 
-                                        onClick={(e) => handleClick(e, item.href)}
-                                    >
-                                        {item.label}
-                                    </a>
-                                ))}
-                            </div>
+                        <div className="md:hidden bg-white border-t border-gray-100 flex flex-col p-4 space-y-4 shadow-xl">
+                            {navItems.map(item => (
+                                <a key={item.label} href={item.href} onClick={() => setIsOpen(false)} className="text-xl font-bold border-b pb-2">{item.label}</a>
+                            ))}
                         </div>
                     )}
                 </nav>
@@ -139,191 +84,98 @@
         };
 
         const Hero = () => (
-            <section className="relative bg-blue-50 py-16 md:py-24 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
-                                Empowering Your Independence Through <span className="text-blue-700 underline decoration-orange-500">Technology.</span>
-                            </h1>
-                            <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed">
-                                We are tech enthusiasts dedicated to helping every person master their devices with patience, confidence, and ease.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <button onClick={() => scrollToSection('#process')} className="inline-block text-center bg-blue-700 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-800 shadow-xl transition-transform hover:-translate-y-1">
-                                    See How It Works
-                                </button>
-                                <button onClick={() => scrollToSection('#contact')} className="inline-block text-center border-4 border-blue-700 text-blue-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition-colors">
-                                    Free Consultation
-                                </button>
-                            </div>
-                        </div>
-                        <div className="hidden md:block">
-                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=800" alt="Two people learning technology together" className="rounded-3xl shadow-2xl border-8 border-white" />
+            <section className="bg-blue-50 py-16 md:py-24 px-4">
+                <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+                            Empowering Your Independence Through <span className="text-blue-700 underline decoration-orange-500">Technology.</span>
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-700 mb-10">Patience-focused technology coaching for every stage of life.</p>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <a href="#contact" className="bg-blue-700 text-white text-center px-8 py-4 rounded-xl text-xl font-bold shadow-xl hover:bg-blue-800 transition-all">Free Consultation</a>
+                            <a href="#services" className="border-4 border-blue-700 text-blue-700 text-center px-8 py-4 rounded-xl text-xl font-bold hover:bg-blue-100 transition-colors">Our Services</a>
                         </div>
                     </div>
-                </div>
-            </section>
-        );
-
-        const About = () => (
-            <section id="about" className="py-20 bg-white scroll-section">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Elva and Tyler</h2>
-                    <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12">
-                        TechME was founded by <strong>Elva and Tyler</strong>, two individuals who are deeply passionate about educating others on technology use and its life-changing benefits.
-                    </p>
-                    <div className="grid md:grid-cols-2 gap-12 text-left">
-                        <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-blue-700 shadow-sm">
-                            <h3 className="text-2xl font-bold mb-4 text-blue-800">Our Mission</h3>
-                            <p className="text-lg text-gray-700">We believe that technology should be a tool for connection, not a source of frustration. We provide the personalized education needed to bridge the digital divide.</p>
-                        </div>
-                        <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-orange-500 shadow-sm">
-                            <h3 className="text-2xl font-bold mb-4 text-orange-700">Education Focused</h3>
-                            <p className="text-lg text-gray-700">Whether it's staying in touch with family or securing your home, we focus on practical skills that make your daily life easier and more enjoyable.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-
-        const Process = () => (
-            <section id="process" className="py-20 bg-slate-900 text-white scroll-section">
-                <div className="max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">Our Simple 3-Step Process</h2>
-                    <div className="grid md:grid-cols-3 gap-12">
-                        {[
-                            { n: "1", t: "Needs Discovery", d: "We chat about your goals and what you'd like to achieve with your devices.", i: "fa-search", c: "bg-blue-700" },
-                            { n: "2", t: "Custom Setup", d: "We simplify your technology, cleaning up menus and optimizing settings for your comfort.", i: "fa-tools", c: "bg-orange-600" },
-                            { n: "3", t: "Guided Training", d: "We walk you through everything at your pace until you feel like a pro.", i: "fa-graduation-cap", c: "bg-green-600" }
-                        ].map(step => (
-                            <div key={step.n} className="relative bg-slate-800 p-8 rounded-3xl border-2 border-slate-700 hover:border-blue-500 transition-colors">
-                                <div className={`${step.c} w-16 h-16 rounded-full flex items-center justify-center text-3xl font-bold mb-6 shadow-lg`}><i className={`fas ${step.i}`}></i></div>
-                                <h3 className="text-2xl font-bold mb-4">{step.t}</h3>
-                                <p className="text-xl text-slate-300">{step.d}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        );
-
-        const Services = () => (
-            <section id="services" className="py-20 bg-white scroll-section">
-                <div className="max-w-7xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-16">How We Can Help</h2>
-                    <div className="grid md:grid-cols-3 gap-10">
-                        {[
-                            { t: "Smartphone Simplification", d: "Making devices easy to see and use for daily connection and photos.", i: "fa-mobile-alt", img: "https://images.unsplash.com/photo-1556656793-062ff987825d?auto=format&fit=crop&q=80&w=600" },
-                            { t: "Smart Home Setup", d: "Voice-controlled lights and thermostats for ease and convenience.", i: "fa-home", img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=600" },
-                            { t: "Digital Safety Training", d: "Learn to spot scams and navigate the web with total confidence.", i: "fa-shield-alt", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600" }
-                        ].map(s => (
-                            <div key={s.t} className="bg-white rounded-3xl border-4 border-gray-100 shadow-lg overflow-hidden text-left">
-                                <img src={s.img} className="w-full h-48 object-cover" alt={s.t} />
-                                <div className="p-8">
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center"><i className={`fas ${s.i} text-blue-700 mr-3`}></i>{s.t}</h3>
-                                    <p className="text-lg text-gray-700">{s.d}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        );
-
-        const WhoWeHelp = () => (
-            <section id="who" className="py-20 bg-blue-700 text-white text-center scroll-section">
-                <div className="max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-16">Who We Support</h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            { t: "Seniors & Retirees", d: "Stay connected with family and simplify your digital life.", i: "fa-user-clock" },
-                            { t: "Accessibility Needs", d: "Settings and tools tailored for vision and hearing support.", i: "fa-eye" },
-                            { t: "Families & Caregivers", d: "Help for your loved ones to stay safe and reachable.", i: "fa-users" }
-                        ].map(g => (
-                            <div key={g.t} className="bg-blue-800 p-10 rounded-3xl border-2 border-blue-600">
-                                <i className={`fas ${g.i} text-4xl mb-6 text-orange-400`}></i>
-                                <h3 className="text-2xl font-bold mb-4">{g.t}</h3>
-                                <p className="text-xl opacity-90">{g.d}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=800" className="rounded-3xl shadow-2xl hidden md:block border-8 border-white" alt="Tech coaching" />
                 </div>
             </section>
         );
 
         const Contact = () => {
-            const [name, setName] = useState('');
-            const [contact, setContact] = useState('');
-            const [message, setMessage] = useState('');
-            const [status, setStatus] = useState('idle'); // idle, sending, success, error
+            const [formData, setFormData] = useState({ name: '', contact: '', message: '' });
+            const [status, setStatus] = useState('idle');
 
             const handleSubmit = async (e) => {
                 e.preventDefault();
                 setStatus('sending');
+                
+                if (!window.emailjs) {
+                    setStatus('error');
+                    return;
+                }
 
                 try {
-                    // emailjs.send(service_id, template_id, template_params)
-                    // You'll need to create a Template in your EmailJS dashboard 
-                    // and replace 'template_id' with your actual template ID.
+                    // Note: Ensure your Service ID is "Gmail" and Template ID is "template_default" in EmailJS dashboard
                     await emailjs.send("Gmail", "template_default", {
-                        from_name: name,
-                        reply_to: contact,
-                        message: message,
-                        to_email: 'evlatyler@gmail.com'
+                        from_name: formData.name,
+                        reply_to: formData.contact,
+                        message: formData.message,
+                        to_name: "Elva & Tyler"
                     });
-                    
                     setStatus('success');
-                    setName(''); setContact(''); setMessage('');
-                    setTimeout(() => setStatus('idle'), 10000);
+                    setFormData({ name: '', contact: '', message: '' });
                 } catch (err) {
-                    console.error('EmailJS Error:', err);
+                    console.error("EmailJS Error details:", err);
                     setStatus('error');
                 }
             };
 
             return (
-                <section id="contact" className="py-20 bg-slate-50 scroll-section">
-                    <div className="max-w-5xl mx-auto px-4">
-                        <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
-                            <div className="p-10 bg-blue-900 text-white">
-                                <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
-                                <p className="text-xl mb-10 opacity-90">Ready to master your tech? Our team is standing by.</p>
-                                <div className="space-y-4">
-                                    <p className="text-xl"><i className="fas fa-phone-alt mr-4 text-orange-400"></i>314-0123-4567</p>
-                                    <p className="text-xl"><i className="fas fa-envelope mr-4 text-orange-400"></i>evlatyler@gmail.com</p>
+                <section id="contact" className="py-20 px-4 scroll-mt-20">
+                    <div className="max-w-5xl mx-auto bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2 border border-gray-100">
+                        <div className="p-10 md:p-16 bg-blue-900 text-white">
+                            <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
+                            <p className="text-xl opacity-90 mb-10 leading-relaxed">We check our messages daily. Tell us what you'd like to learn!</p>
+                            <div className="space-y-6">
+                                <div className="flex items-center text-xl"><i className="fas fa-phone-alt w-10 text-orange-400"></i>314-0123-4567</div>
+                                <div className="flex items-center text-xl"><i className="fas fa-envelope w-10 text-orange-400"></i><span className="text-lg">evlatyler@gmail.com</span></div>
+                            </div>
+                        </div>
+                        <div className="p-10 md:p-16">
+                            {status === 'success' ? (
+                                <div className="text-center space-y-4 animate-fade-in py-10">
+                                    <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto"><i className="fas fa-check"></i></div>
+                                    <h3 className="text-2xl font-bold text-gray-900">Message Sent Successfully!</h3>
+                                    <p className="text-gray-600">We'll be in touch very soon.</p>
+                                    <button onClick={() => setStatus('idle')} className="text-blue-700 underline font-bold mt-4">Send another</button>
                                 </div>
-                            </div>
-                            <div className="p-10">
-                                {status === 'success' ? (
-                                    <div className="h-full flex flex-col justify-center items-center text-center animate-fade-in">
-                                        <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4">
-                                            <i className="fas fa-check"></i>
+                            ) : (
+                                <form className="space-y-6" onSubmit={handleSubmit}>
+                                    {status === 'error' && (
+                                        <div className="p-4 bg-red-50 text-red-700 rounded-xl font-bold border border-red-200">
+                                            <i className="fas fa-exclamation-circle mr-2"></i>
+                                            Connection error. Please try again or email us directly at evlatyler@gmail.com
                                         </div>
-                                        <h3 className="text-2xl font-bold mb-2 text-green-700">Message Sent!</h3>
-                                        <p className="text-lg text-gray-600">Thank you for reaching out. Elva or Tyler will be in touch with you shortly.</p>
-                                        <button onClick={() => setStatus('idle')} className="mt-4 text-blue-700 underline font-bold">Send another</button>
+                                    )}
+                                    <div>
+                                        <label className="block text-gray-700 font-bold mb-2">Your Name</label>
+                                        <input required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none transition-colors" placeholder="Full Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                                     </div>
-                                ) : (
-                                    <form onSubmit={handleSubmit}>
-                                        {status === 'error' && (
-                                            <div className="p-3 bg-red-100 text-red-700 rounded-lg mb-4 font-bold text-center">
-                                                Something went wrong. Please check your connection or call us!
-                                            </div>
-                                        )}
-                                        <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your Name" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
-                                        <input required type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="Email or Phone Number" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
-                                        <textarea required value={message} onChange={e => setMessage(e.target.value)} placeholder="How can we help?" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" rows="4"></textarea>
-                                        <button 
-                                            type="submit" 
-                                            disabled={status === 'sending'}
-                                            className={`w-full text-white py-4 rounded-xl text-xl font-bold transition-colors ${status === 'sending' ? 'bg-gray-400' : 'bg-blue-700 hover:bg-blue-800'}`}
-                                        >
-                                            {status === 'sending' ? 'Sending...' : 'Send Message'}
-                                        </button>
-                                    </form>
-                                )}
-                            </div>
+                                    <div>
+                                        <label className="block text-gray-700 font-bold mb-2">Email or Phone</label>
+                                        <input required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none transition-colors" placeholder="How can we reach you?" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 font-bold mb-2">Message</label>
+                                        <textarea required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none resize-none transition-colors" rows="4" placeholder="How can we help?" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+                                    </div>
+                                    <button disabled={status === 'sending'} className={`w-full text-white py-5 rounded-xl text-2xl font-bold shadow-lg transition-all ${status === 'sending' ? 'bg-gray-400' : 'bg-blue-700 hover:bg-blue-800'}`}>
+                                        {status === 'sending' ? (
+                                            <span className="flex items-center justify-center"><i className="fas fa-circle-notch fa-spin mr-3"></i>Sending...</span>
+                                        ) : 'Send Message'}
+                                    </button>
+                                </form>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -331,17 +183,21 @@
         };
 
         const App = () => (
-            <div className="min-h-screen">
+            <div className="min-h-screen flex flex-col">
                 <Navbar />
-                <Hero />
-                <About />
-                <Process />
-                <Services />
-                <WhoWeHelp />
-                <Contact />
-                <footer className="bg-slate-900 text-slate-400 py-12 text-center border-t-8 border-orange-500">
-                    <p className="text-2xl font-bold text-white mb-4">TechME</p>
-                    <p>&copy; {new Date().getFullYear()} TechME. Dedicated to Digital Literacy.</p>
+                <main className="flex-grow">
+                    <Hero />
+                    <section id="about" className="py-20 px-4 text-center scroll-mt-20">
+                        <h2 className="text-3xl md:text-5xl font-bold mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Elva and Tyler</h2>
+                        <p className="max-w-3xl mx-auto text-xl md:text-2xl text-gray-700 leading-relaxed">
+                            Two technology enthusiasts dedicated to bridging the digital divide through patience and personalized education.
+                        </p>
+                    </section>
+                    <Contact />
+                </main>
+                <footer className="bg-slate-900 text-white py-12 text-center border-t-8 border-orange-500">
+                    <span className="text-3xl font-bold">Tech<span className="text-orange-500">ME</span></span>
+                    <p className="mt-4 text-slate-400">© {new Date().getFullYear()} TechME. Dedicated to Digital Literacy.</p>
                 </footer>
             </div>
         );
