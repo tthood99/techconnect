@@ -13,7 +13,7 @@ const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   useEffect(() => {
-    // Initializing with the Public Key provided: aTdQnBSv8H5viqrL4
+    // Verified Public Key: aTdQnBSv8H5viqrL4
     if (typeof emailjs !== 'undefined') {
         emailjs.init("aTdQnBSv8H5viqrL4"); 
     }
@@ -31,8 +31,8 @@ const Contact: React.FC = () => {
     setStatus('sending');
 
     try {
-      // SERVICE_ID: "Gmail" (Verified from your previous screenshot)
-      // TEMPLATE_ID: "template_default" (Standard default for EmailJS)
+      // SERVICE_ID: "Gmail"
+      // TEMPLATE_ID: "template_default"
       await emailjs.send("Gmail", "template_default", {
         from_name: formData.name,
         reply_to: formData.contact,
@@ -42,10 +42,9 @@ const Contact: React.FC = () => {
 
       setStatus('success');
       setFormData({ name: '', contact: '', message: '' });
-      // Reset success message after 10 seconds
       setTimeout(() => setStatus('idle'), 10000);
     } catch (err) {
-      console.error('EmailJS Error Detail:', err);
+      console.error('EmailJS Error:', err);
       setStatus('error');
     }
   };
@@ -71,7 +70,7 @@ const Contact: React.FC = () => {
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-envelope w-10 text-orange-400"></i>
-                <span className="break-all">evlatyler@gmail.com</span>
+                <span className="break-all text-lg">evlatyler@gmail.com</span>
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-map-marker-alt w-10 text-orange-400"></i>
@@ -102,7 +101,7 @@ const Contact: React.FC = () => {
                 {status === 'error' && (
                   <div className="p-4 bg-red-50 text-red-700 rounded-xl font-bold border border-red-200">
                     <i className="fas fa-exclamation-circle mr-2"></i>
-                    Something went wrong. Please check your connection or call us!
+                    Something went wrong. Please check your credentials or connection!
                   </div>
                 )}
                 
@@ -114,7 +113,7 @@ const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 focus:ring-2 focus:ring-blue-100 outline-none transition-all" 
+                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
                     placeholder="Full Name"
                   />
                 </div>
@@ -127,7 +126,7 @@ const Contact: React.FC = () => {
                     value={formData.contact}
                     onChange={handleChange}
                     required
-                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 focus:ring-2 focus:ring-blue-100 outline-none transition-all" 
+                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
                     placeholder="How should we reach you?"
                   />
                 </div>
@@ -140,7 +139,7 @@ const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 focus:ring-2 focus:ring-blue-100 outline-none transition-all resize-none" 
+                    className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl focus:border-blue-700 outline-none resize-none" 
                     placeholder="Describe what you'd like help with..."
                   ></textarea>
                 </div>
@@ -148,7 +147,7 @@ const Contact: React.FC = () => {
                 <button 
                   type="submit" 
                   disabled={status === 'sending'}
-                  className={`w-full text-white py-5 rounded-xl text-2xl font-bold transition-all shadow-lg flex items-center justify-center space-x-3 ${status === 'sending' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-[0.98]'}`}
+                  className={`w-full text-white py-5 rounded-xl text-2xl font-bold transition-all shadow-lg flex items-center justify-center space-x-3 ${status === 'sending' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800'}`}
                 >
                   {status === 'sending' ? (
                     <>
