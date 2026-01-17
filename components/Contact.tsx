@@ -1,5 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+// Assuming global emailjs is available from script tag in index.html
+declare const emailjs: any;
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,31 +17,19 @@ const Contact: React.FC = () => {
     setStatus('sending');
 
     try {
-      // We use Formspree's AJAX endpoint. 
-      // Replace 'https://formspree.io/f/xvgzlowq' with your specific Formspree ID 
-      // if you want to manage it in their dashboard, but for now we'll target the email.
-      const response = await fetch('https://formspree.io/f/xvgzlowq', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          email: 'evlatyler@gmail.com', // Formspree will route to the registered email
-          name: formData.name,
-          contact_method: formData.contact,
-          message: formData.message,
-          _subject: `New TechME Inquiry from ${formData.name}`
-        })
+      // Use your Service ID 'Gmail' and the default template
+      await emailjs.send("Gmail", "template_default", {
+        from_name: formData.name,
+        reply_to: formData.contact,
+        message: formData.message,
+        to_email: 'evlatyler@gmail.com'
       });
 
-      if (response.ok) {
-        setStatus('success');
-        setFormData({ name: '', contact: '', message: '' });
-      } else {
-        setStatus('error');
-      }
+      setStatus('success');
+      setFormData({ name: '', contact: '', message: '' });
+      setTimeout(() => setStatus('idle'), 10000);
     } catch (err) {
+      console.error('EmailJS Error:', err);
       setStatus('error');
     }
   };
@@ -80,7 +71,7 @@ const Contact: React.FC = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">Message Sent!</h3>
                 <p className="text-lg text-gray-600">
-                  Thank you, {formData.name}. We have received your inquiry and will reach out to you at {formData.contact} shortly.
+                  Thank you! We have received your inquiry and will reach out to you shortly.
                 </p>
                 <button 
                   onClick={() => setStatus('idle')}

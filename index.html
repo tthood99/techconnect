@@ -8,6 +8,8 @@
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- React and Babel -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -43,8 +45,8 @@
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
@@ -54,6 +56,9 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
+
+        // Initialize EmailJS with the Public Key from your screenshot
+        emailjs.init("AlzaSyB-DNj2bdMK__poP6dl");
 
         const scrollToSection = (id) => {
             const element = document.getElementById(id.replace('#', ''));
@@ -251,21 +256,30 @@
             const [name, setName] = useState('');
             const [contact, setContact] = useState('');
             const [message, setMessage] = useState('');
-            const [isSubmitted, setIsSubmitted] = useState(false);
+            const [status, setStatus] = useState('idle'); // idle, sending, success, error
 
-            const handleSubmit = (e) => {
+            const handleSubmit = async (e) => {
                 e.preventDefault();
-                const subject = encodeURIComponent(`New TechME Inquiry from ${name}`);
-                const body = encodeURIComponent(`Name: ${name}\nContact Info: ${contact}\n\nMessage:\n${message}`);
-                
+                setStatus('sending');
+
                 try {
-                  window.top.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+                    // emailjs.send(service_id, template_id, template_params)
+                    // You'll need to create a Template in your EmailJS dashboard 
+                    // and replace 'template_id' with your actual template ID.
+                    await emailjs.send("Gmail", "template_default", {
+                        from_name: name,
+                        reply_to: contact,
+                        message: message,
+                        to_email: 'evlatyler@gmail.com'
+                    });
+                    
+                    setStatus('success');
+                    setName(''); setContact(''); setMessage('');
+                    setTimeout(() => setStatus('idle'), 10000);
                 } catch (err) {
-                  window.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+                    console.error('EmailJS Error:', err);
+                    setStatus('error');
                 }
-                
-                setIsSubmitted(true);
-                setTimeout(() => setIsSubmitted(false), 10000);
             };
 
             return (
@@ -274,28 +288,39 @@
                         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
                             <div className="p-10 bg-blue-900 text-white">
                                 <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
-                                <p className="text-xl mb-10 opacity-90">Ready to master your tech? Schedule a free consultation today.</p>
+                                <p className="text-xl mb-10 opacity-90">Ready to master your tech? Our team is standing by.</p>
                                 <div className="space-y-4">
                                     <p className="text-xl"><i className="fas fa-phone-alt mr-4 text-orange-400"></i>314-0123-4567</p>
                                     <p className="text-xl"><i className="fas fa-envelope mr-4 text-orange-400"></i>evlatyler@gmail.com</p>
                                 </div>
                             </div>
                             <div className="p-10">
-                                {isSubmitted ? (
+                                {status === 'success' ? (
                                     <div className="h-full flex flex-col justify-center items-center text-center animate-fade-in">
                                         <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4">
                                             <i className="fas fa-check"></i>
                                         </div>
-                                        <h3 className="text-2xl font-bold mb-2">Check Your Email App</h3>
-                                        <p className="text-lg text-gray-600">Your message is ready! Just click <strong>Send</strong> in your email window.</p>
-                                        <button onClick={() => setIsSubmitted(false)} className="mt-4 text-blue-700 underline font-bold">Try again</button>
+                                        <h3 className="text-2xl font-bold mb-2 text-green-700">Message Sent!</h3>
+                                        <p className="text-lg text-gray-600">Thank you for reaching out. Elva or Tyler will be in touch with you shortly.</p>
+                                        <button onClick={() => setStatus('idle')} className="mt-4 text-blue-700 underline font-bold">Send another</button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit}>
+                                        {status === 'error' && (
+                                            <div className="p-3 bg-red-100 text-red-700 rounded-lg mb-4 font-bold text-center">
+                                                Something went wrong. Please check your connection or call us!
+                                            </div>
+                                        )}
                                         <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your Name" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
-                                        <input required type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="Email or Phone" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
+                                        <input required type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="Email or Phone Number" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
                                         <textarea required value={message} onChange={e => setMessage(e.target.value)} placeholder="How can we help?" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" rows="4"></textarea>
-                                        <button type="submit" className="w-full bg-blue-700 text-white py-4 rounded-xl text-xl font-bold hover:bg-blue-800 transition-colors">Send Message</button>
+                                        <button 
+                                            type="submit" 
+                                            disabled={status === 'sending'}
+                                            className={`w-full text-white py-4 rounded-xl text-xl font-bold transition-colors ${status === 'sending' ? 'bg-gray-400' : 'bg-blue-700 hover:bg-blue-800'}`}
+                                        >
+                                            {status === 'sending' ? 'Sending...' : 'Send Message'}
+                                        </button>
                                     </form>
                                 )}
                             </div>
