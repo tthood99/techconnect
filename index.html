@@ -15,18 +15,21 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-        body {
-            font-family: 'Open+Sans', sans-serif;
+        html {
             scroll-behavior: smooth;
         }
-        .high-contrast-text { color: #000000; }
-        .high-contrast-bg { background-color: #FFFFFF; }
-        .accessible-blue { color: #0056b3; }
-        .accessible-blue-bg { background-color: #0056b3; }
-        /* Custom scrollbar for cleaner look in iframe */
+        body {
+            font-family: 'Open+Sans', sans-serif;
+        }
+        /* Custom scrollbar for cleaner look */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #0056b3; border-radius: 10px; }
+        
+        /* Ensure sections have enough top margin so the sticky header doesn't cover the title */
+        .scroll-section {
+            scroll-margin-top: 5rem;
+        }
     </style>
 <script type="importmap">
 {
@@ -122,11 +125,11 @@
         );
 
         const About = () => (
-            <section id="about" className="py-20 bg-white scroll-mt-20">
+            <section id="about" className="py-20 bg-white scroll-section">
                 <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Tyler & Elva</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Elva and Tyler</h2>
                     <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12">
-                        TechME was founded by <strong>Tyler and Elva</strong>, two individuals who are deeply passionate about educating others on technology use and its life-changing benefits.
+                        TechME was founded by <strong>Elva and Tyler</strong>, two individuals who are deeply passionate about educating others on technology use and its life-changing benefits.
                     </p>
                     <div className="grid md:grid-cols-2 gap-12 text-left">
                         <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-blue-700 shadow-sm">
@@ -143,7 +146,7 @@
         );
 
         const Process = () => (
-            <section id="process" className="py-20 bg-slate-900 text-white scroll-mt-20">
+            <section id="process" className="py-20 bg-slate-900 text-white scroll-section">
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">Our Simple 3-Step Process</h2>
                     <div className="grid md:grid-cols-3 gap-12">
@@ -164,7 +167,7 @@
         );
 
         const Services = () => (
-            <section id="services" className="py-20 bg-white scroll-mt-20">
+            <section id="services" className="py-20 bg-white scroll-section">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-16">How We Can Help</h2>
                     <div className="grid md:grid-cols-3 gap-10">
@@ -187,7 +190,7 @@
         );
 
         const WhoWeHelp = () => (
-            <section id="who" className="py-20 bg-blue-700 text-white text-center scroll-mt-20">
+            <section id="who" className="py-20 bg-blue-700 text-white text-center scroll-section">
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl md:text-5xl font-bold mb-16">Who We Support</h2>
                     <div className="grid md:grid-cols-3 gap-8">
@@ -208,7 +211,7 @@
         );
 
         const Contact = () => (
-            <section id="contact" className="py-20 bg-slate-50 scroll-mt-20">
+            <section id="contact" className="py-20 bg-slate-50 scroll-section">
                 <div className="max-w-5xl mx-auto px-4">
                     <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
                         <div className="p-10 bg-blue-900 text-white">

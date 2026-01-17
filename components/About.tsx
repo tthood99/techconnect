@@ -3,13 +3,13 @@ import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-white scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">
-          Meet Tyler & Elva
+          Meet Elva and Tyler
         </h2>
         <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12">
-          TechME was founded by <strong>Tyler and Elva</strong>, two individuals who are deeply passionate about educating others on technology use and its life-changing benefits. 
+          TechME was founded by <strong>Elva and Tyler</strong>, two individuals who are deeply passionate about educating others on technology use and its life-changing benefits. 
         </p>
         <div className="grid md:grid-cols-2 gap-12 text-left">
           <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-blue-700 shadow-sm">
