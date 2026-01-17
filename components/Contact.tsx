@@ -14,11 +14,11 @@ const Contact: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center text-xl">
                 <i className="fas fa-phone-alt w-10 text-orange-400"></i>
-                <span>(555) 012-3456</span>
+                <span>314-0123-4567</span>
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-envelope w-10 text-orange-400"></i>
-                <span>hello@techme.com</span>
+                <span>evlatyler@gmail.com</span>
               </div>
               <div className="flex items-center text-xl">
                 <i className="fas fa-map-marker-alt w-10 text-orange-400"></i>

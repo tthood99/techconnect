@@ -18,6 +18,9 @@ st.markdown("""
         #MainMenu { visibility: hidden; }
         footer { visibility: hidden; }
         header { visibility: hidden; }
+        div[data-testid="stVerticalBlock"] > div:has(iframe) {
+            overflow: hidden;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -28,8 +31,9 @@ def main():
         with open(html_file_path, "r", encoding="utf-8") as f:
             html_content = f.read()
             
-        # We use height=1200 and scrolling=True to ensure visibility. 
-        components.html(html_content, height=1200, scrolling=True)
+        # Increase height significantly to prevent double-scrolling inside the iframe
+        # or use scrolling=True but height enough to avoid inner scrollbars where possible.
+        components.html(html_content, height=2500, scrolling=True)
     else:
         st.error("Frontend missing. Please ensure index.html exists in the same directory.")
 
