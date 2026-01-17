@@ -7,28 +7,28 @@ const Services: React.FC = () => {
       title: "Smartphone Simplification",
       desc: "Making your iPhone or Android easy to see and use. We remove the clutter and focus on what matters to you—calling family, taking photos, and staying safe.",
       icon: "fa-mobile-alt",
-      img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=400"
+      img: "https://images.unsplash.com/photo-1556656793-062ff987825d?auto=format&fit=crop&q=80&w=600"
     },
     {
       title: "Smart Home Setup",
       desc: "Voice-controlled lights, smart doorbells, and thermostats that help you manage your home without straining your hands or back.",
       icon: "fa-home",
-      img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=400"
+      img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=600"
     },
     {
       title: "Digital Safety Training",
       desc: "Learn how to spot scams, manage passwords securely, and browse the web without worry. We build your confidence and your security.",
       icon: "fa-shield-alt",
-      img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=400"
+      img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600"
     }
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-20 bg-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">How We Can Help</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Tailored technology education that prioritizes your comfort and ease of use.</p>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Tailored technology education that prioritizes every person's comfort and ease of use.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-10">
           {services.map((s) => (

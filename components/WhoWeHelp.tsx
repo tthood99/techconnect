@@ -15,13 +15,13 @@ const WhoWeHelp: React.FC = () => {
     },
     {
       title: "Concerned Families",
-      desc: "Peace of mind for family members. We help setup remote safety monitoring and communication tools for aging parents.",
+      desc: "Peace of mind for family members. We help setup communication tools for loved ones to stay safe and reachable.",
       icon: "fa-users"
     }
   ];
 
   return (
-    <section id="who" className="py-20 bg-blue-700 text-white">
+    <section id="who" className="py-20 bg-blue-700 text-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">Who We Support</h2>
         <div className="grid md:grid-cols-3 gap-8">

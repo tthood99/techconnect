@@ -3,7 +3,7 @@ import React from 'react';
 
 const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-20 bg-slate-50">
+    <section id="contact" className="py-20 bg-slate-50 scroll-mt-20">
       <div className="max-w-5xl mx-auto px-4">
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
           <div className="p-10 md:p-16 bg-blue-900 text-white">

@@ -20,14 +20,14 @@ const Process: React.FC = () => {
     {
       number: "3",
       title: "Guided Training",
-      desc: "We teach you how to use your setup at your own pace, focusing on the tasks that make your daily life better.",
+      desc: "We teach every person how to use their setup at their own pace, focusing on the tasks that make daily life better.",
       icon: "fa-graduation-cap",
       color: "bg-green-600"
     }
   ];
 
   return (
-    <section id="process" className="py-20 bg-slate-900 text-white">
+    <section id="process" className="py-20 bg-slate-900 text-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
           Our Simple 3-Step Process
