@@ -5,52 +5,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechME | Master Your Technology</title>
+    
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- React & Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
         html, body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            font-family: 'Open+Sans', sans-serif;
-            scroll-behavior: smooth;
+            margin: 0; padding: 0; overflow-x: hidden;
+            font-family: 'Open+Sans', sans-serif; scroll-behavior: smooth;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #0056b3; border-radius: 10px; }
-        
-        .scroll-mt-20 {
-            scroll-margin-top: 80px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
+        .scroll-mt-20 { scroll-margin-top: 80px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
     </style>
-    <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
-<body class="bg-slate-50 text-gray-900 leading-relaxed">
+<body class="bg-slate-50 text-gray-900">
     <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Navbar = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const navItems = [
+                { label: 'About Us', href: '#about' },
+                { label: 'Our Process', href: '#process' },
+                { label: 'Services', href: '#services' },
+                { label: 'Who We Help', href: '#who' },
+                { label: 'Contact', href: '#contact' },
+            ];
+            return (
+                <nav className="sticky top-0 z-50 bg-white border-b-4 border-blue-700 shadow-md">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between h-20">
+                            <div className="flex items-center">
+                                <span className="text-2xl md:text-3xl font-bold text-blue-800 tracking-tight">
+                                    Tech<span className="text-orange-600">ME</span>
+                                </span>
+                            </div>
+                            <div className="hidden md:flex items-center space-x-8">
+                                {navItems.map(item => (
+                                    <a key={item.label} href={item.href} className="text-lg font-bold text-gray-800 hover:text-blue-700 hover:underline decoration-4">{item.label}</a>
+                                ))}
+                                <a href="#contact" className="bg-blue-700 text-white px-6 py-2 rounded-full text-lg font-bold hover:bg-blue-800">Get Started</a>
+                            </div>
+                            <div className="md:hidden flex items-center">
+                                <button onClick={() => setIsOpen(!isOpen)} className="text-gray-800 p-2"><i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-3xl`}></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    {isOpen && (
+                        <div className="md:hidden bg-white border-b-2 border-blue-700 px-2 pt-2 pb-3 space-y-1">
+                            {navItems.map(item => (
+                                <a key={item.label} href={item.href} onClick={() => setIsOpen(false)} className="block px-3 py-4 text-xl font-bold text-gray-800 border-b border-gray-100">{item.label}</a>
+                            ))}
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        const Hero = () => (
+            <section className="relative bg-blue-50 py-16 md:py-24">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">Empowering Your Independence Through <span className="text-blue-700 underline decoration-orange-500">Technology.</span></h1>
+                            <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed">We are tech enthusiasts dedicated to helping you master your devices with patience, confidence, and ease.</p>
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <a href="#process" className="text-center bg-blue-700 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-800 shadow-xl">See How It Works</a>
+                                <a href="#contact" className="text-center border-4 border-blue-700 text-blue-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition-colors">Free Consultation</a>
+                            </div>
+                        </div>
+                        <div className="hidden md:block">
+                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=800" className="rounded-3xl shadow-2xl border-8 border-white" alt="People learning tech" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => {
+            const [formData, setFormData] = useState({ name: '', contact: '', message: '' });
+            const [status, setStatus] = useState('idle');
+
+            useEffect(() => {
+                if (window.emailjs) emailjs.init("aTdQnBSv8H5viqrL4");
+            }, []);
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setStatus('sending');
+                try {
+                    await emailjs.send("Gmail", "template_default", {
+                        from_name: formData.name,
+                        reply_to: formData.contact,
+                        message: formData.message,
+                        to_name: "Elva & Tyler",
+                    });
+                    setStatus('success');
+                    setFormData({ name: '', contact: '', message: '' });
+                } catch (err) {
+                    setStatus('error');
+                }
+            };
+
+            return (
+                <section id="contact" className="py-20 bg-slate-50 scroll-mt-20">
+                    <div className="max-w-5xl mx-auto px-4">
+                        <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2 border border-gray-100">
+                            <div className="p-10 md:p-16 bg-blue-900 text-white">
+                                <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
+                                <p className="text-xl mb-10 opacity-90 leading-relaxed">Ready to feel confident with your technology? We are standing by to help.</p>
+                                <div className="space-y-6">
+                                    <div className="flex items-center text-xl"><i className="fas fa-phone-alt w-10 text-orange-400"></i><span>314-0123-4567</span></div>
+                                    <div className="flex items-center text-xl"><i className="fas fa-envelope w-10 text-orange-400"></i><span className="text-lg">evlatyler@gmail.com</span></div>
+                                </div>
+                            </div>
+                            <div className="p-10 md:p-16">
+                                {status === 'success' ? (
+                                    <div className="text-center space-y-4 animate-fade-in">
+                                        <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4 mx-auto"><i className="fas fa-check"></i></div>
+                                        <h3 className="text-2xl font-bold">Message Sent!</h3>
+                                        <button onClick={() => setStatus('idle')} className="text-blue-700 underline font-bold">Send another</button>
+                                    </div>
+                                ) : (
+                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                        {status === 'error' && <div className="p-4 bg-red-50 text-red-700 rounded-xl font-bold">Error sending. Please call us!</div>}
+                                        <input required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl outline-none" placeholder="Your Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                                        <input required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl outline-none" placeholder="Email or Phone" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} />
+                                        <textarea required className="w-full p-4 text-lg border-2 border-gray-100 rounded-xl outline-none" rows="4" placeholder="How can we help?" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+                                        <button disabled={status === 'sending'} className="w-full bg-blue-700 text-white py-5 rounded-xl text-2xl font-bold shadow-lg">{status === 'sending' ? 'Sending...' : 'Send Message'}</button>
+                                    </form>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const App = () => (
+            <div className="min-h-screen">
+                <Navbar />
+                <Hero />
+                <div id="about" className="py-20 bg-white text-center scroll-mt-20 max-w-4xl mx-auto px-4">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Elva and Tyler</h2>
+                    <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">Two individuals passionate about educating others on technology use and its life-changing benefits.</p>
+                </div>
+                <Contact />
+                <footer className="bg-slate-900 text-white py-12 text-center border-t-8 border-orange-500">
+                    <span className="text-3xl font-bold">Tech<span className="text-orange-500">ME</span></span>
+                    <p className="mt-2 text-slate-400">© {new Date().getFullYear()} TechME. All rights reserved.</p>
+                </footer>
+            </div>
+        );
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
 </body>
 </html>
