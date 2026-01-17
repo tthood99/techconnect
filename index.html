@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechConnect OT | Bridging the Digital Divide</title>
+    <title>TechME | Bridging the Digital Divide</title>
+    <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- React and Babel for on-the-fly transpilation (Best for Streamlit portability) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
         body {
@@ -17,6 +23,10 @@
         .high-contrast-bg { background-color: #FFFFFF; }
         .accessible-blue { color: #0056b3; }
         .accessible-blue-bg { background-color: #0056b3; }
+        /* Custom scrollbar for cleaner look in iframe */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0056b3; border-radius: 10px; }
     </style>
 <script type="importmap">
 {
@@ -30,5 +40,214 @@
 </head>
 <body class="bg-slate-50 text-gray-900 leading-relaxed">
     <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Navbar = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const navItems = [
+                { label: 'About Us', href: '#about' },
+                { label: 'Our Process', href: '#process' },
+                { label: 'Services', href: '#services' },
+                { label: 'Who We Help', href: '#who' },
+                { label: 'Contact', href: '#contact' },
+            ];
+
+            return (
+                <nav className="sticky top-0 z-50 bg-white border-b-4 border-blue-700 shadow-md">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between h-20">
+                            <div className="flex items-center">
+                                <span className="text-2xl md:text-3xl font-bold text-blue-800 tracking-tight">
+                                    Tech<span className="text-orange-600">ME</span>
+                                </span>
+                            </div>
+                            <div className="hidden md:flex items-center space-x-8">
+                                {navItems.map((item) => (
+                                    <a key={item.label} href={item.href} className="text-lg font-bold text-gray-800 hover:text-blue-700 hover:underline decoration-4 transition-all">
+                                        {item.label}
+                                    </a>
+                                ))}
+                                <a href="#contact" className="bg-blue-700 text-white px-6 py-2 rounded-full text-lg font-bold hover:bg-blue-800 shadow-lg">Get Started</a>
+                            </div>
+                            <div className="md:hidden flex items-center">
+                                <button onClick={() => setIsOpen(!isOpen)} className="text-gray-800 p-2 focus:outline-none">
+                                    <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-3xl`}></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {isOpen && (
+                        <div className="md:hidden bg-white border-b-2 border-blue-700">
+                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                                {navItems.map((item) => (
+                                    <a key={item.label} href={item.href} className="block px-3 py-4 text-xl font-bold text-gray-800 border-b border-gray-100" onClick={() => setIsOpen(false)}>
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        const Hero = () => (
+            <section className="relative bg-blue-50 py-16 md:py-24 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+                                Empowering Your Independence Through <span className="text-blue-700 underline decoration-orange-500">Technology.</span>
+                            </h1>
+                            <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed">
+                                We are Licensed Occupational Therapists partnering with tech specialists to help you master your devices with confidence and safety.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <a href="#process" className="inline-block text-center bg-blue-700 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-800 shadow-xl transition-transform hover:-translate-y-1">
+                                    See How It Works
+                                </a>
+                                <a href="#contact" className="inline-block text-center border-4 border-blue-700 text-blue-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition-colors">
+                                    Free Consultation
+                                </a>
+                            </div>
+                        </div>
+                        <div className="hidden md:block">
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="OT helping senior" className="rounded-3xl shadow-2xl border-8 border-white" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section id="about" className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-4 text-center">
+                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 underline decoration-blue-500 decoration-8 underline-offset-8">Meet Your Clinical Partners</h2>
+                    <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12">
+                        Founded by Sarah and Mark, two <strong>Licensed Occupational Therapists</strong> with over 15 years of combined experience.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-12 text-left">
+                        <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-blue-700 shadow-sm">
+                            <h3 className="text-2xl font-bold mb-4 text-blue-800">Our Clinical Roots</h3>
+                            <p className="text-lg text-gray-700">We approach tech support as functional therapy—helping you stay connected to what matters most.</p>
+                        </div>
+                        <div className="bg-slate-50 p-8 rounded-2xl border-l-8 border-orange-500 shadow-sm">
+                            <h3 className="text-2xl font-bold mb-4 text-orange-700">Specialized Expertise</h3>
+                            <p className="text-lg text-gray-700">We ensure every setup is clinically appropriate, technically sound, and future-proof.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Process = () => (
+            <section id="process" className="py-20 bg-slate-900 text-white">
+                <div className="max-w-7xl mx-auto px-4">
+                    <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">Our Simple 3-Step Process</h2>
+                    <div className="grid md:grid-cols-3 gap-12">
+                        {[
+                            { n: "1", t: "Clinical Assessment", d: "An OT meets with you to understand your goals and abilities.", i: "fa-clipboard-check", c: "bg-blue-700" },
+                            { n: "2", t: "Custom Setup", d: "Tech specialists simplify menus and install safety tools.", i: "fa-tools", c: "bg-orange-600" },
+                            { n: "3", t: "Guided Training", d: "We teach you how to use your setup at your own pace.", i: "fa-graduation-cap", c: "bg-green-600" }
+                        ].map(step => (
+                            <div key={step.n} className="relative bg-slate-800 p-8 rounded-3xl border-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                <div className={`${step.c} w-16 h-16 rounded-full flex items-center justify-center text-3xl font-bold mb-6 shadow-lg`}><i className={`fas ${step.i}`}></i></div>
+                                <h3 className="text-2xl font-bold mb-4">{step.t}</h3>
+                                <p className="text-xl text-slate-300">{step.d}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Services = () => (
+            <section id="services" className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-16">How We Can Help</h2>
+                    <div className="grid md:grid-cols-3 gap-10">
+                        {[
+                            { t: "Smartphone Simplification", d: "Making devices easy to see and use for daily connection.", i: "fa-mobile-alt", img: "https://images.unsplash.com/photo-1556656793-062ff987825d?w=400" },
+                            { t: "Smart Home Setup", d: "Voice-controlled lights and thermostats for ease of living.", i: "fa-home", img: "https://images.unsplash.com/photo-1558002038-1055907df827?w=400" },
+                            { t: "Digital Safety Training", d: "Learn to spot scams and browse securely with confidence.", i: "fa-shield-alt", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400" }
+                        ].map(s => (
+                            <div key={s.t} className="bg-white rounded-3xl border-4 border-gray-100 shadow-lg overflow-hidden text-left">
+                                <img src={s.img} className="w-full h-48 object-cover" alt={s.t} />
+                                <div className="p-8">
+                                    <h3 className="text-2xl font-bold mb-4 flex items-center"><i className={`fas ${s.i} text-blue-700 mr-3`}></i>{s.t}</h3>
+                                    <p className="text-lg text-gray-700">{s.d}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const WhoWeHelp = () => (
+            <section id="who" className="py-20 bg-blue-700 text-white text-center">
+                <div className="max-w-7xl mx-auto px-4">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-16">Who We Support</h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            { t: "Seniors & Retirees", d: "Stay connected with grandkids without frustration.", i: "fa-user-clock" },
+                            { t: "Vision & Hearing Needs", d: "Specialized settings that make screens readable again.", i: "fa-eye" },
+                            { t: "Concerned Families", d: "Peace of mind through setup of communication tools.", i: "fa-users" }
+                        ].map(g => (
+                            <div key={g.t} className="bg-blue-800 p-10 rounded-3xl border-2 border-blue-600">
+                                <i className={`fas ${g.i} text-4xl mb-6 text-orange-400`}></i>
+                                <h3 className="text-2xl font-bold mb-4">{g.t}</h3>
+                                <p className="text-xl opacity-90">{g.d}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <section id="contact" className="py-20 bg-slate-50">
+                <div className="max-w-5xl mx-auto px-4">
+                    <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
+                        <div className="p-10 bg-blue-900 text-white">
+                            <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
+                            <p className="text-xl mb-10 opacity-90">Ready to feel confident? Schedule a free 15-minute consultation.</p>
+                            <div className="space-y-4">
+                                <p className="text-xl"><i className="fas fa-phone-alt mr-4 text-orange-400"></i>(555) 012-3456</p>
+                                <p className="text-xl"><i className="fas fa-envelope mr-4 text-orange-400"></i>hello@techme.com</p>
+                            </div>
+                        </div>
+                        <div className="p-10">
+                            <input type="text" placeholder="Your Name" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl" />
+                            <input type="text" placeholder="Email or Phone" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl" />
+                            <textarea placeholder="How can we help?" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl" rows="4"></textarea>
+                            <button className="w-full bg-blue-700 text-white py-4 rounded-xl text-xl font-bold">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const App = () => (
+            <div className="min-h-screen">
+                <Navbar />
+                <Hero />
+                <About />
+                <Process />
+                <Services />
+                <WhoWeHelp />
+                <Contact />
+                <footer className="bg-slate-900 text-slate-400 py-12 text-center border-t-8 border-orange-500">
+                    <p className="text-2xl font-bold text-white mb-4">TechME</p>
+                    <p>&copy; {new Date().getFullYear()} TechME. Licensed Occupational Therapy Services.</p>
+                </footer>
+            </div>
+        );
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>

@@ -3,27 +3,35 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
-# Set page configuration for a better viewing experience
 st.set_page_config(
-    page_title="TechConnect OT",
+    page_title="TechME",
     page_icon="♿",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
+# Remove streamlit padding for a cleaner "app" feel
+st.markdown("""
+    <style>
+        .reportview-container .main .block-container { padding-top: 0rem; padding-bottom: 0rem; padding-left: 0rem; padding-right: 0rem; }
+        iframe { border: none; }
+        #MainMenu { visibility: hidden; }
+        footer { visibility: hidden; }
+        header { visibility: hidden; }
+    </style>
+""", unsafe_allow_html=True)
+
 def main():
-    # Path to the index.html file
     html_file_path = "index.html"
     
     if os.path.exists(html_file_path):
         with open(html_file_path, "r", encoding="utf-8") as f:
             html_content = f.read()
             
-        # Inject the HTML content into the Streamlit app
-        # We use a height that covers the viewport, or allow scrolling
-        components.html(html_content, height=2000, scrolling=True)
+        # We use height=1200 and scrolling=True to ensure visibility. 
+        components.html(html_content, height=1200, scrolling=True)
     else:
-        st.error("index.html not found. Please ensure the frontend files are in the same directory.")
+        st.error("Frontend missing. Please ensure index.html exists in the same directory.")
 
 if __name__ == "__main__":
     main()
