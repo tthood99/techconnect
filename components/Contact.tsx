@@ -7,16 +7,40 @@ const Contact: React.FC = () => {
     contact: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`New TechME Inquiry from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\n` +
-      `Contact Info: ${formData.contact}\n\n` +
-      `Message:\n${formData.message}`
-    );
-    window.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+    setStatus('sending');
+
+    try {
+      // We use Formspree's AJAX endpoint. 
+      // Replace 'https://formspree.io/f/xvgzlowq' with your specific Formspree ID 
+      // if you want to manage it in their dashboard, but for now we'll target the email.
+      const response = await fetch('https://formspree.io/f/xvgzlowq', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: 'evlatyler@gmail.com', // Formspree will route to the registered email
+          name: formData.name,
+          contact_method: formData.contact,
+          message: formData.message,
+          _subject: `New TechME Inquiry from ${formData.name}`
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', contact: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -29,9 +53,9 @@ const Contact: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4">
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden grid md:grid-cols-2">
           <div className="p-10 md:p-16 bg-blue-900 text-white">
-            <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
+            <h2 className="text-4xl font-bold mb-6 text-white">Let's Connect</h2>
             <p className="text-xl mb-10 opacity-90">
-              Ready to feel confident with your technology? Schedule a free 15-minute phone consultation with us.
+              Ready to feel confident with your technology? Our team is ready to help you master your devices.
             </p>
             <div className="space-y-6">
               <div className="flex items-center text-xl">
@@ -49,50 +73,74 @@ const Contact: React.FC = () => {
             </div>
           </div>
           <div className="p-10 md:p-16">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-xl font-bold text-gray-800 mb-2">Your Name</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
-                  placeholder="Full Name"
-                />
+            {status === 'success' ? (
+              <div className="h-full flex flex-col justify-center items-center text-center space-y-4 animate-fade-in">
+                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4">
+                  <i className="fas fa-paper-plane"></i>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Message Sent!</h3>
+                <p className="text-lg text-gray-600">
+                  Thank you, {formData.name}. We have received your inquiry and will reach out to you at {formData.contact} shortly.
+                </p>
+                <button 
+                  onClick={() => setStatus('idle')}
+                  className="text-blue-700 font-bold underline text-lg mt-4"
+                >
+                  Send another message
+                </button>
               </div>
-              <div>
-                <label className="block text-xl font-bold text-gray-800 mb-2">Email or Phone</label>
-                <input 
-                  type="text" 
-                  name="contact"
-                  value={formData.contact}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
-                  placeholder="How can we reach you?"
-                />
-              </div>
-              <div>
-                <label className="block text-xl font-bold text-gray-800 mb-2">How can we help?</label>
-                <textarea 
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
-                  placeholder="Tell us about the device or task you'd like help with."
-                ></textarea>
-              </div>
-              <button 
-                type="submit"
-                className="w-full bg-blue-700 text-white py-5 rounded-xl text-2xl font-bold hover:bg-blue-800 transition-all shadow-lg"
-              >
-                Send Message
-              </button>
-            </form>
+            ) : (
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {status === 'error' && (
+                  <div className="p-4 bg-red-50 text-red-700 rounded-xl font-bold">
+                    Oops! Something went wrong. Please try again or call us directly.
+                  </div>
+                )}
+                <div>
+                  <label className="block text-xl font-bold text-gray-800 mb-2">Your Name</label>
+                  <input 
+                    type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
+                    placeholder="Full Name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xl font-bold text-gray-800 mb-2">Email or Phone</label>
+                  <input 
+                    type="text" 
+                    name="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
+                    placeholder="How should we reach you?"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xl font-bold text-gray-800 mb-2">How can we help?</label>
+                  <textarea 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={4}
+                    className="w-full p-4 text-lg border-4 border-gray-100 rounded-xl focus:border-blue-700 outline-none" 
+                    placeholder="Tell us about the device or task you'd like help with."
+                  ></textarea>
+                </div>
+                <button 
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className={`w-full text-white py-5 rounded-xl text-2xl font-bold transition-all shadow-lg ${status === 'sending' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800'}`}
+                >
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

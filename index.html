@@ -30,6 +30,14 @@
         .scroll-section {
             scroll-margin-top: 80px;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
     </style>
 <script type="importmap">
 {
@@ -243,12 +251,21 @@
             const [name, setName] = useState('');
             const [contact, setContact] = useState('');
             const [message, setMessage] = useState('');
+            const [isSubmitted, setIsSubmitted] = useState(false);
 
             const handleSubmit = (e) => {
                 e.preventDefault();
                 const subject = encodeURIComponent(`New TechME Inquiry from ${name}`);
                 const body = encodeURIComponent(`Name: ${name}\nContact Info: ${contact}\n\nMessage:\n${message}`);
-                window.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+                
+                try {
+                  window.top.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+                } catch (err) {
+                  window.location.href = `mailto:evlatyler@gmail.com?subject=${subject}&body=${body}`;
+                }
+                
+                setIsSubmitted(true);
+                setTimeout(() => setIsSubmitted(false), 10000);
             };
 
             return (
@@ -264,12 +281,23 @@
                                 </div>
                             </div>
                             <div className="p-10">
-                                <form onSubmit={handleSubmit}>
-                                    <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your Name" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
-                                    <input required type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="Email or Phone" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
-                                    <textarea required value={message} onChange={e => setMessage(e.target.value)} placeholder="How can we help?" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" rows="4"></textarea>
-                                    <button type="submit" className="w-full bg-blue-700 text-white py-4 rounded-xl text-xl font-bold hover:bg-blue-800 transition-colors">Send Message</button>
-                                </form>
+                                {isSubmitted ? (
+                                    <div className="h-full flex flex-col justify-center items-center text-center animate-fade-in">
+                                        <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4">
+                                            <i className="fas fa-check"></i>
+                                        </div>
+                                        <h3 className="text-2xl font-bold mb-2">Check Your Email App</h3>
+                                        <p className="text-lg text-gray-600">Your message is ready! Just click <strong>Send</strong> in your email window.</p>
+                                        <button onClick={() => setIsSubmitted(false)} className="mt-4 text-blue-700 underline font-bold">Try again</button>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handleSubmit}>
+                                        <input required type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your Name" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
+                                        <input required type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="Email or Phone" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" />
+                                        <textarea required value={message} onChange={e => setMessage(e.target.value)} placeholder="How can we help?" className="w-full p-4 mb-4 border-2 border-gray-100 rounded-xl outline-blue-700" rows="4"></textarea>
+                                        <button type="submit" className="w-full bg-blue-700 text-white py-4 rounded-xl text-xl font-bold hover:bg-blue-800 transition-colors">Send Message</button>
+                                    </form>
+                                )}
                             </div>
                         </div>
                     </div>
